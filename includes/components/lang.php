@@ -1,0 +1,1 @@
+<a href="?lang=fr">FR</a> | <a href="?lang=en">EN</a>
