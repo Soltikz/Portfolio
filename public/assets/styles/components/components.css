@@ -1,3 +1,14 @@
 /* Toujours nommer son component avec un "_" au début, puis l'importer comme ci-dessous.  */
 
 /* @import "_yourComponent.css"; */
+@import "_about.css";
+@import "_connexion.css";
+@import "_footer.css";
+@import "_header.css";
+@import "_hero.css";
+@import "_hobbies.css";
+@import "_journey.css";
+@import "_mentionlegal.css";
+@import "_production.css";
+@import "_projets.css";
+@import "_skills.css";

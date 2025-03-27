@@ -1,0 +1,144 @@
+.production {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 96px;
+  gap: 24px;
+}
+.title-prod h2 {
+  font-size: var(--s-12);
+}
+.title-prod p {
+  color: var(--light-brown-dt);
+  font-size: var(--s-6);
+  font-family: var(--heading-font);
+}
+
+.content-produc {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+  flex: 1;
+}
+
+.accordeons {
+  display: flex;
+  flex-direction: column;
+  display: inline-block;
+  flex: 1;
+}
+
+.produc {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--white);
+  padding: 32px 16px;
+}
+.back {
+  border: none;
+  background-color: var(--dark-200);
+  border-radius: 32px;
+}
+.produc p {
+  font-size: var(--s-5);
+}
+
+.arrow-right {
+  width: 48px;
+  height: 48px;
+  padding: 8px 8px;
+  background-color: var(--light-brown-dt);
+  border-radius: 50%;
+  justify-content: none;
+}
+.arrow-up {
+  width: 48px;
+  height: 48px;
+  padding: 8px 8px;
+  background-color: var(--light-brown-dt);
+  border-radius: 50%;
+  justify-content: none;
+}
+.arrow-up svg,
+.arrow-right svg {
+  width: 32px;
+  height: 32px;
+}
+
+.arrow-up {
+  display: none;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 562px;
+}
+.preview {
+  display: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.preview img {
+  width: 562px;
+  height: 239px;
+  border-radius: 32px;
+}
+
+.preview h3 {
+  color: var(--light-brown-dt);
+  font-size: var(--s-8);
+}
+.accordeons,
+.preview-all {
+  display: inline-block;
+}
+
+.info-pre {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.preview a {
+  display: inline-block;
+  width: fit-content;
+  background-color: var(--light-brown-dt);
+  border-radius: 32px;
+  padding: 16px 48px;
+}
+
+@media (max-width: 1100px) {
+  .production {
+    padding: 32px 32px;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .content-produc {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .accordeons,
+  .preview-all {
+    width: 100%;
+  }
+
+  .preview {
+    width: 100%;
+  }
+
+  .preview img {
+    width: 100%;
+    max-width: 329px;
+    height: auto;
+  }
+  .info-pre a {
+    margin: auto;
+  }
+}

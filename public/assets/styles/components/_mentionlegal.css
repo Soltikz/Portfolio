@@ -1,0 +1,47 @@
+.mention {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 256px;
+}
+.title-mention {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.title-mention h1 {
+  font-size: var(--s-16);
+}
+.title-mention p {
+  color: var(--light-brown-dt);
+}
+p strong {
+  color: var(--light-brown-dt);
+}
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.article h2 {
+  color: var(--light-brown-dt);
+  font-size: var(--s-6);
+}
+.art-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.art-info .mail {
+  color: var(--light-brown-dt);
+}
+
+.art-info .bold {
+  font-weight: bold;
+}
+
+@media (max-width: 888px) {
+  .mention {
+    padding: 32px;
+  }
+}

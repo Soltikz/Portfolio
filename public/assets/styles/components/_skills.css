@@ -1,0 +1,97 @@
+.skills {
+  padding: 32px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.title-skills h2 {
+  font-size: var(--s-12);
+}
+
+.title-skills p {
+  color: var(--light-brown-dt);
+  font-size: var(--s-6);
+  font-family: var(--heading-font);
+}
+
+.accordeon-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.skill-font,
+.skill-back,
+.skill-ux-ui,
+.skill-movie {
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px var(--white);
+  padding: 32px 16px;
+  gap: 24px;
+}
+
+.style-back {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 16px;
+  gap: 24px;
+  background-color: var(--dark-200);
+  border-radius: 32px;
+  border-bottom: none;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.info svg {
+  color: var(--light-brown-dt);
+  height: 48px;
+  width: 48px;
+}
+
+.info p {
+  font-size: var(--s-5);
+}
+
+.skill-font p.para,
+.skill-back p.para,
+.skill-ux-ui p.para,
+.skill-movie p.para {
+  display: none;
+}
+
+.font-end,
+.back-end,
+.ux-ui,
+.movie {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (max-width: 888px) {
+  .skills {
+    padding: 32px;
+  }
+
+  .info p {
+    word-wrap: break-word;
+  }
+
+  .skill-font,
+  .skill-back,
+  .skill-ux-ui,
+  .skill-movie {
+    justify-content: space-between;
+  }
+}

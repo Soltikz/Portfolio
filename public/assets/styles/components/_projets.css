@@ -1,0 +1,53 @@
+.project {
+  margin-top: 150px;
+  padding: 32px 256px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.title-project h1 {
+  font-size: var(--s-8);
+  color: var(--light-brown-dt);
+}
+
+.title-project h2 {
+  font-size: var(--s-16);
+}
+img {
+  border-radius: 32px;
+}
+
+.text p strong {
+  color: var(--light-brown-dt);
+}
+.btn-project {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 24px;
+}
+
+.btn-project a {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  background-color: var(--light-brown-dt);
+  padding: 16px 48px;
+  border-radius: 32px;
+}
+
+.btn-project a svg {
+  color: var(--white);
+}
+
+@media (max-width: 888px) {
+  .project {
+    padding: 32px;
+  }
+}
+
+.btn-project {
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+}
