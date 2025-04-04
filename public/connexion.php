@@ -1,20 +1,23 @@
 <?php
 session_start(); // Démarrer la session
+require_once __DIR__ . '../.env';
 
-// Fonction de connexion à la base de données
+
+
 function connexion()
 {
-    $hostname = 'mysql-lucasmrtn.alwaysdata.net';
-    $username = 'lucasmrtn';
-    $password = 'Luc@as19072006';
-    $db = 'lucasmrtn_portfolio';
+    $hostname = $_ENV['DB_HOST'];
+    $username = $_ENV['DB_USER'];
+    $password = $_ENV['DB_PASS'];
+    $db = $_ENV['DB_NAME'];
 
     try {
         $bdd = new PDO("mysql:host=$hostname;dbname=$db;charset=utf8", $username, $password);
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $bdd;
     } catch (PDOException $e) {
-        die("Erreur de connexion : " . $e->getMessage());
+        error_log("Erreur de connexion : " . $e->getMessage());
+        die("Erreur de connexion à la base de données.");
     }
 }
 $bdd = connexion();
