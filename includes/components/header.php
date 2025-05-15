@@ -1,8 +1,3 @@
-<style>
-
-</style>
-
-
 <header class="navbar">
     <a class="logo" href="index.php">
         <svg width="67" height="53" viewBox="0 0 102 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,8 +22,12 @@
             <span><?=$translations['menu']??'menu'?></span>
         </div>
         <div class="link hidden" id="menu-link">
+            <?php if (isset($_SESSION['statut']) && $_SESSION['statut'] === 'admin'): ?>
+            <a href="dashboard.php">Dashboard</a>
+            <?php endif; ?>
             <a href="index.php"><?=$translations['home']??'accueil'?></a>
             <a href="about.php"><?=$translations['about']??'a propos'?></a>
+
         </div>
     </div>
 </header>

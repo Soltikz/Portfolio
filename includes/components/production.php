@@ -2,7 +2,6 @@
 $info = $bdd->query("SELECT * FROM production");
 $productions = $info->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <div class="production">
     <div class="title-prod">
         <p>01.</p>
@@ -10,6 +9,50 @@ $productions = $info->fetchAll(PDO::FETCH_ASSOC);
             <?=$translations['produc'] ?? 'Productions'?>
         </h2>
     </div>
+
+    <!-- Switch pour changer de mode -->
+    <div class="mode-switch">
+        <label class="switch">
+            <input type="checkbox" id="mode-toggle">
+            <span class="slider"></span>
+        </label>
+        <span id="mode-label">Professionel</span>
+    </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const toggle = document.getElementById("mode-toggle");
+        const label = document.getElementById("mode-label");
+
+        toggle.addEventListener("change", function() {
+            const isChecked = toggle.checked;
+            const newMode = isChecked ? "academique" : "professionnel";
+
+            // Changer le texte du label
+            label.textContent = isChecked ? "Académique" : "Professionnel";
+
+            // Sélectionner tous les liens des aperçus
+            const links = document.querySelectorAll(".preview a");
+
+            links.forEach((link) => {
+                const currentHref = link.getAttribute("href");
+
+                // Remplacer le mode dans l'URL (s'il existe déjà)
+                if (currentHref.includes("mode=")) {
+                    const updatedHref = currentHref.replace(
+                        /mode=(professionnel|academique)/,
+                        "mode=" + newMode
+                    );
+                    link.setAttribute("href", updatedHref);
+                } else {
+                    // Si le paramètre mode n'est pas là, on l'ajoute
+                    const separator = currentHref.includes("?") ? "&" : "?";
+                    const updatedHref = currentHref + separator + "mode=" + newMode;
+                    link.setAttribute("href", updatedHref);
+                }
+            });
+        });
+    });
+    </script>
     <div class="content-produc">
         <div class="accordeons">
             <?php
@@ -55,7 +98,7 @@ $productions = $info->fetchAll(PDO::FETCH_ASSOC);
                 <div class="info-pre">
                     <h3><?=$production['name']?></h3>
                     <p><?=$production['description']?></p>
-                    <a href="project.php?name=<?= urlencode($production['name']) ?>">
+                    <a href="project.php?name=<?= urlencode($production['name']) ?>&mode=professionnel">
                         <?=$translations['Discover the project'] ?? 'Découvrir le projet'?>
                     </a>
                 </div>

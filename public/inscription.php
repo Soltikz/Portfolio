@@ -42,6 +42,14 @@ include_once "../includes/components/head.php";
                 <label for="loginPassword">Mot de passe</label>
             </div>
 
+            <div class="input-group">
+                <select name="loginStatus" id="loginStatus" required>
+                    <option value="" disabled selected hidden>Choisissez un statut</option>
+                    <option value="etudiant">Étudiant</option>
+                    <option value="enseignant">Enseignant</option>
+                </select>
+            </div>
+
             <div class="btn-submit">
                 <input type="submit" value="Créer votre compte" class="submit-btn">
         </form>

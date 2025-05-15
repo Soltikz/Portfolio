@@ -4,8 +4,9 @@ require_once "connexion.php"; // Assure-toi d'inclure ta connexion à la base de
 // Vérifier si un name est passé en paramètre
 if (isset($_GET['name'])) {
     $name = $_GET['name'];
+    $mode = $_GET['mode'] ?? 'professionnel'; // <- récupération du mode
 
-    // Préparer et exécuter la requête SQL pour récupérer les infos du projet
+    // Requête projet
     $stmt = $bdd->prepare("SELECT * FROM projets WHERE name = :name");
     $stmt->execute(['name' => $name]);
     $projet = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -13,6 +14,9 @@ if (isset($_GET['name'])) {
     echo "Aucun projet trouvé.";
     exit;
 }
+$texte1 = htmlspecialchars_decode($projet['texte_1_' . ($mode === 'academique' ? 'acc' : 'pro')] ?? '');
+$texte2 = htmlspecialchars_decode($projet['texte_2_' . ($mode === 'academique' ? 'acc' : 'pro')] ?? '');
+$texte3 = htmlspecialchars_decode($projet['texte_3_' . ($mode === 'academique' ? 'acc' : 'pro')] ?? '');
 ?>
 
 <!DOCTYPE html>
@@ -30,10 +34,10 @@ include_once "../includes/components/head.php";
             <h2><?= htmlspecialchars($projet['name']) ?></h2>
         </div>
         <img src="<?= htmlspecialchars($projet['img_1']) ?>" alt="">
-        <div class="text">
-            <p><?= htmlspecialchars_decode($projet['texte_1']) ?></p>
-            <p><?= htmlspecialchars_decode($projet['texte_2']) ?></p>
-            <p><?= htmlspecialchars_decode($projet['texte_3']) ?></p>
+        <div class="text text-project">
+            <p><?= $texte1 ?></p>
+            <p><?= $texte2 ?></p>
+            <p><?= $texte3 ?></p>
         </div>
         <div class="btn-project">
             <a href="<?= htmlspecialchars($projet['github']) ?>">

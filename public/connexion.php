@@ -1,15 +1,12 @@
 <?php
 session_start(); // Démarrer la session
-require_once __DIR__ . '../.env';
-
-
 
 function connexion()
 {
-    $hostname = $_ENV['DB_HOST'];
-    $username = $_ENV['DB_USER'];
-    $password = $_ENV['DB_PASS'];
-    $db = $_ENV['DB_NAME'];
+    $hostname = 'mysql-lucasmrtn.alwaysdata.net';
+    $username = 'lucasmrtn';
+    $password = 'Luc@as19072006';
+    $db = 'lucasmrtn_portfolio';
 
     try {
         $bdd = new PDO("mysql:host=$hostname;dbname=$db;charset=utf8", $username, $password);
@@ -20,92 +17,104 @@ function connexion()
         die("Erreur de connexion à la base de données.");
     }
 }
+
+function traiterConnexion($bdd)
+{
+    $username = htmlspecialchars(trim($_POST['loginUser']));
+    $password = trim($_POST['loginPassword']);
+
+    $stmt = $bdd->prepare("SELECT * FROM connexion WHERE users = :username");
+    $stmt->execute([':username' => $username]);
+    $users = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($users && password_verify($password, $users['password'])) {
+        $_SESSION['users'] = $username;
+        $_SESSION['statut'] = $users['statut']; // ou 'statut' si tu corriges le nom dans la BDD
+        header("Location: index.php");
+        exit();
+    } else {
+        $msg = $users ? "Mot de passe incorrect." : "Utilisateur non trouvé.";
+        header("Location: login.php?error=" . urlencode($msg));
+        exit();
+    }
+}
+
+function traiterInscription($bdd)
+{
+    $required = ['loginName', 'loginFirstName', 'loginEmail', 'loginUser', 'loginPassword', 'loginStatus'];
+    foreach ($required as $field) {
+        if (!isset($_POST[$field])) {
+            header("Location: inscription.php?error=" . urlencode("Tous les champs sont requis."));
+            exit();
+        }
+    }
+
+    $name = strtolower(htmlspecialchars($_POST['loginName']));
+    $firstname = strtolower(htmlspecialchars($_POST['loginFirstName']));
+    $email = htmlspecialchars($_POST['loginEmail']);
+    $username = htmlspecialchars($_POST['loginUser']);
+    $password = $_POST['loginPassword'];
+    $statue = htmlspecialchars($_POST['loginStatus']);
+
+    $expectedEmail = strtolower($firstname . "." . $name . "@univ-tln.fr");
+
+    if ($email === $expectedEmail) {
+        // Email universitaire : validation automatique
+        $sql = "INSERT INTO connexion (name, firstname, email, users, password, statue) 
+                VALUES (:name, :firstname, :email, :users, :password, :statue)";
+        
+        $stmt = $bdd->prepare($sql);
+
+        try {
+            $stmt->execute([
+                ':name' => $name,
+                ':firstname' => $firstname,
+                ':email' => $email,
+                ':users' => $username,
+                ':password' => password_hash($password, PASSWORD_DEFAULT),
+                ':statue' => $statue,
+            ]);
+            header("Location: index.php?success=" . urlencode("Votre compte a été automatiquement validé car vous avez une adresse mail d'enseignant de l'université de Toulon."));
+            exit();
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'inscription : " . $e->getMessage();
+        }
+    } else {
+        // Email non universitaire : ajout dans la table d'attente
+        $sql = "INSERT INTO attente_validation (name, firstname, email, users, password, statue) 
+                VALUES (:name, :firstname, :email, :users, :password, :statue)";
+        
+        $stmt = $bdd->prepare($sql);
+
+        try {
+            $stmt->execute([
+                ':name' => $name,
+                ':firstname' => $firstname,
+                ':email' => $email,
+                ':users' => $username,
+                ':password' => password_hash($password, PASSWORD_DEFAULT),
+                ':statue' => $statue,
+            ]);
+            header("Location: index.php?info=" . urlencode("Votre compte est en attente de validation par un administrateur."));
+            exit();
+        } catch (PDOException $e) {
+            echo "Erreur lors de l'ajout en attente : " . $e->getMessage();
+        }
+    }
+}
+
+
+// Main
 $bdd = connexion();
 
-// Vérifier l'action (connexion ou inscription)
 if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'login') {
-        // Traitement de la connexion
-        if (isset($_POST['loginUser']) && isset($_POST['loginPassword'])) {
-            $username = htmlspecialchars(trim($_POST['loginUser']));
-            $password = trim($_POST['loginPassword']);
-
-            // Connexion à la base de données
-            $bdd = connexion();
-
-            // Vérifier si l'utilisateur existe
-            $requete = "SELECT * FROM connexion WHERE users = :username";
-            $stmt = $bdd->prepare($requete);
-            $stmt->execute([':username' => $username]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user) {
-                // Vérification du mot de passe haché
-                if (password_verify($password, $user['password'])) {
-                    $_SESSION['users'] = $username; // Stocker l'utilisateur dans la session
-                    header("Location: index.php");
-                    exit();
-                } else {
-                    header("Location: login.php?error=" . urlencode("Mot de passe incorrect."));
-                    exit();
-                }
-            } else {
-                header("Location: login.php?error=" . urlencode("Utilisateur non trouvé."));
-                exit();
-            }
-        }
-    } elseif ($_GET['action'] == 'signup') {
-        // Traitement de l'inscription
-        if (isset($_POST['loginName']) && isset($_POST['loginFirstName']) && isset($_POST['loginEmail']) && isset($_POST['loginUser']) && isset($_POST['loginPassword'])) {
-            // Sécurisation des données
-            $name = htmlspecialchars($_POST['loginName']);
-            $firstname = htmlspecialchars($_POST['loginFirstName']);
-            $email = htmlspecialchars($_POST['loginEmail']);
-            $username = htmlspecialchars($_POST['loginUser']);
-            $password = $_POST['loginPassword'];
-            $statu = 'teacher';
-        
-            // Vérifier si le prénom et le nom commencent par une majuscule et les mettre en minuscules
-            if (ctype_upper(substr($name, 0, 1))) {
-                $name = strtolower($name);
-            }
-            if (ctype_upper(substr($firstname, 0, 1))) {
-                $firstname = strtolower($firstname);
-            }
-        
-            // Connexion à la base de données
-            $bdd = connexion();
-        
-            // Vérification de l'email
-            if ($email == strtolower($firstname . "." . $name . "@univ-tln.fr")) {
-                // Requête préparée pour éviter l'injection SQL
-                $sql = "INSERT INTO connexion (name, firstname, email, users, password, statue) VALUES (:name, :firstname, :email, :users, :password, :statue)";
-                $stmt = $bdd->prepare($sql);
-        
-                try {
-                    // Exécution de la requête
-                    $stmt->execute([
-                        ':name' => $name,
-                        ':firstname' => $firstname,
-                        ':email' => $email,
-                        ':users' => $username,
-                        ':password' => password_hash($password, PASSWORD_DEFAULT), // Hachage du mot de passe
-                        ':statue' => $statu,
-                    ]);
-        
-                    // Rediriger vers la page de connexion
-                    header("Location: login.php");
-                    exit();
-                } catch (PDOException $e) {
-                    // Gestion des erreurs de requête SQL
-                    echo "Erreur lors de l'inscription : " . $e->getMessage();
-                }
-            } else {
-                // Si l'email ne correspond pas, rediriger avec un message d'erreur
-                header("Location: inscription.php?error=" . urlencode("L'email ne correspond pas au format requis, veuillez utiliser votre adresse mail universitaire."));
-                exit();
-            }
-        }        
+    switch ($_GET['action']) {
+        case 'login':
+            traiterConnexion($bdd);
+            break;
+        case 'signup':
+            traiterInscription($bdd);
+            break;
     }
 }
 ?>

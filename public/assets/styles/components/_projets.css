@@ -16,20 +16,23 @@
 img {
   border-radius: 32px;
 }
-
+.text-project p {
+  max-width: 950px;
+  margin: auto;
+}
 .text p strong {
   color: var(--light-brown-dt);
 }
 .btn-project {
   display: flex;
-  flex-direction: row;
   justify-content: center;
+  text-align: center;
+  margin: auto;
   gap: 24px;
 }
 
 .btn-project a {
   display: flex;
-  flex-direction: row;
   gap: 4px;
   background-color: var(--light-brown-dt);
   padding: 16px 48px;
@@ -40,14 +43,12 @@ img {
   color: var(--white);
 }
 
-@media (max-width: 888px) {
+@media (max-width: 1150px) {
   .project {
     padding: 32px;
   }
-}
 
-.btn-project {
-  flex-direction: column;
-  margin: auto;
-  /* align-items: center; */
+  .btn-project {
+    flex-direction: column;
+  }
 }

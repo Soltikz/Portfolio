@@ -63,7 +63,8 @@
   position: relative;
 }
 
-.form .input-group input {
+.form .input-group input,
+.form .input-group select {
   width: 100%;
   padding: 10px 0;
   font-size: 1rem;
@@ -74,6 +75,18 @@
   outline: none;
   background-color: transparent;
   color: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px 16px;
+  padding-right: 30px;
+}
+.form .input-group select option {
+  background-color: #222; /* fond sombre */
+  color: #fff; /* texte clair */
+  border: color(#222);
 }
 
 .form .input-group label {
@@ -87,7 +100,9 @@
 }
 
 .form .input-group input:focus + label,
-.form .input-group input:valid + label {
+.form .input-group input:valid + label,
+.form .input-group select:focus + label,
+.form .input-group select:valid + label {
   transform: translateY(-18px);
   color: var(--light-brown-lt);
   font-size: 0.8rem;
