@@ -5,7 +5,7 @@ require_once("connexion.php");
 <!DOCTYPE html>
 <html lang="fr">
 <?php
-$title = "Page d'accueil";
+$title = "Mention légales";
 include_once "../includes/components/head.php";
 ?>
 

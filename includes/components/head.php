@@ -45,6 +45,7 @@ $actual_url = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_
 
     <!-- Scripts and styles -->
     <script defer src="assets/scripts/index.js"></script>
+    <script defer src="assets/scripts/commentaire.js"></script>
     <link rel="stylesheet" href="assets/styles/main.css">
 
     <!-- Manifest for PWA -->

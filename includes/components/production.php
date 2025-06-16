@@ -1,6 +1,8 @@
 <?php
 $info = $bdd->query("SELECT * FROM production");
 $productions = $info->fetchAll(PDO::FETCH_ASSOC);
+$info2 = $bdd->query("SELECT * FROM projets");
+$projets = $info2->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <div class="production">
     <div class="title-prod">
@@ -11,12 +13,15 @@ $productions = $info->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- Switch pour changer de mode -->
-    <div class="mode-switch">
-        <label class="switch">
-            <input type="checkbox" id="mode-toggle">
-            <span class="slider"></span>
-        </label>
-        <span id="mode-label">Professionel</span>
+    <div class="filtre">
+        <div class="mode-switch">
+            <label class="switch">
+                <input type="checkbox" id="mode-toggle">
+                <span class="slider"></span>
+            </label>
+            <span id="mode-label">Professionel</span>
+        </div>
+
     </div>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -94,10 +99,13 @@ $productions = $info->fetchAll(PDO::FETCH_ASSOC);
             foreach ($productions as $production) {
             ?>
             <div class="preview">
-                <img src="<?=$production['image']?>" alt="<?=$production['alt']?>">
+                <img src="<?=$production['image']?>" alt="image projet">
                 <div class="info-pre">
                     <h3><?=$production['name']?></h3>
-                    <p><?=$production['description']?></p>
+                    <p><?= mb_strlen($production['description']) > 150 
+    ? mb_substr($production['description'], 0, 150) . '...'
+    : $production['description']; ?>
+                    </p>
                     <a href="project.php?name=<?= urlencode($production['name']) ?>&mode=professionnel">
                         <?=$translations['Discover the project'] ?? 'Découvrir le projet'?>
                     </a>

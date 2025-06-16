@@ -8,22 +8,22 @@ include_once "../includes/components/head.php";
 ?>
 
 <body>
-  <?php include_once "../includes/components/header.php" ?>
-  <main>
-    <h1>Plan du site</h1>
-    <ul>
-      <?php
+    <?php include_once "../includes/components/header.php" ?>
+    <main>
+        <h1>Plan du site</h1>
+        <ul>
+            <?php
       foreach ($pages as $page) {
         ?>
-        <li>
-          <a href="<?php echo $page["file"] ?>"><?php echo $page["title"] ?></a>
-        </li>
-        <?php
+            <li>
+                <a href="<?php echo $page["file"] ?>"><?php echo $page["title"] ?></a>
+            </li>
+            <?php
       }
       ?>
-    </ul>
-  </main>
-  <?php include_once "../includes/components/footer.php" ?>
+        </ul>
+    </main>
+    <?php include_once "../includes/components/footer.php" ?>
 </body>
 
 </html>

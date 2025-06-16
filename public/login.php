@@ -16,7 +16,9 @@ include_once "../includes/components/head.php";
                 }
                 ?>
             </div>
-            <legend>Connexion</legend>
+            <legend>
+                <h1>Connexion</h1>
+            </legend>
             <div class="input-group">
                 <input type="text" name="loginUser" id="loginUser" required>
                 <label for="loginUser">Nom d'utilisateur</label>

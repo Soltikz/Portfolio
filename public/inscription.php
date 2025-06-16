@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php
-$title = "Inscription";
+$title = "Créer votre compte";
 include_once "../includes/components/head.php";
 ?>
 
@@ -15,7 +15,9 @@ include_once "../includes/components/head.php";
                 }
                 ?>
             </div>
-            <legend>Créer votre compte</legend>
+            <legend>
+                <h1>Créer votre compte</h1>
+            </legend>
 
             <div class="input-group">
                 <input type="text" name="loginName" id="loginName" required>

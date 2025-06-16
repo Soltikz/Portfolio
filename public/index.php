@@ -1,7 +1,4 @@
 <?php
-// if (session_status() === PHP_SESSION_NONE) {
-//     session_start();
-// }
 require_once("connexion.php");
 
 if (isset($_GET['info'])) {
@@ -10,7 +7,6 @@ if (isset($_GET['info'])) {
 if (isset($_GET['success'])) {
     echo "<script>alert('" . htmlspecialchars($_GET['success']) . "');</script>";
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +22,10 @@ include_once "../includes/components/head.php";
     <main>
         <?php
         // if (isset($_SESSION['users']) && isset($_SESSION['statut'])) {
-        //     $statut = $_SESSION['statut'];
+        //     $statue = $_SESSION['statue'];
         //     echo "<h2>Bienvenue, " . htmlspecialchars($_SESSION['users']) . "</h2>";
 
-        //     switch ($statut) {
+        //     switch ($statue) {
         //         case 'enseignant':
         //             echo "<p>Contenu réservé aux enseignants.</p>";
         //             break;

@@ -26,6 +26,7 @@
 
 .form {
   position: relative;
+  margin: auto;
   width: 100%;
   max-width: 500px;
   padding: 80px 40px 40px;
@@ -45,7 +46,7 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.08);
+  /* background: rgba(255, 255, 255, 0.08); */
   transform: skewX(-26deg);
   transform-origin: bottom left;
   border-radius: 10px;
@@ -141,6 +142,12 @@
   font-weight: 900;
   text-decoration: none;
   color: inherit;
+}
+textarea {
+  color: var(--white);
+  background-color: transparent;
+  margin-bottom: 16px;
+  width: 100%;
 }
 
 @media (max-width: 888px) {

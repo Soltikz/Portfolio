@@ -6,7 +6,7 @@ function connexion()
     $hostname = 'mysql-lucasmrtn.alwaysdata.net';
     $username = 'lucasmrtn';
     $password = 'Luc@as19072006';
-    $db = 'lucasmrtn_portfolio';
+    $db = 'lucasmrtn_portfoliov2';
 
     try {
         $bdd = new PDO("mysql:host=$hostname;dbname=$db;charset=utf8", $username, $password);
@@ -23,15 +23,18 @@ function traiterConnexion($bdd)
     $username = htmlspecialchars(trim($_POST['loginUser']));
     $password = trim($_POST['loginPassword']);
 
-    $stmt = $bdd->prepare("SELECT * FROM connexion WHERE users = :username");
+    $stmt = $bdd->prepare("SELECT * FROM users WHERE users = :username");
     $stmt->execute([':username' => $username]);
     $users = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($users && password_verify($password, $users['password'])) {
-        $_SESSION['users'] = $username;
-        $_SESSION['statut'] = $users['statut']; // ou 'statut' si tu corriges le nom dans la BDD
-        header("Location: index.php");
-        exit();
+        if ($users && password_verify($password, $users['password'])) {
+    $_SESSION['users'] = $username;
+    $_SESSION['statue'] = $users['statue'];
+    $_SESSION['id'] = $users['id'];
+    header("Location: index.php");
+    exit();
+}
     } else {
         $msg = $users ? "Mot de passe incorrect." : "Utilisateur non trouvé.";
         header("Location: login.php?error=" . urlencode($msg));
@@ -60,7 +63,7 @@ function traiterInscription($bdd)
 
     if ($email === $expectedEmail) {
         // Email universitaire : validation automatique
-        $sql = "INSERT INTO connexion (name, firstname, email, users, password, statue) 
+        $sql = "INSERT INTO users (name, firstname, email, users, password, statue) 
                 VALUES (:name, :firstname, :email, :users, :password, :statue)";
         
         $stmt = $bdd->prepare($sql);
@@ -102,7 +105,6 @@ function traiterInscription($bdd)
         }
     }
 }
-
 
 // Main
 $bdd = connexion();

@@ -23,4 +23,4 @@ function getPages($directory)
   return $pages;
 }
 
-$pages = getPages($_SERVER['DOCUMENT_ROOT'] . "/other/portfolio-manon/public/");
+$pages = getPages($_SERVER['DOCUMENT_ROOT']."/portfolio/public");

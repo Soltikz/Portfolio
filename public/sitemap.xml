@@ -1,1 +1,62 @@
-<!-- Utiliser ce site pour créer le sitemap, une fois le site en ligne : https://www.xml-sitemaps.com/ -->
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://www.lucasmrtn.fr/</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/index</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/about</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/project?name=Keizen&amp;mode=professionnel</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/project?name=Portfolio&amp;mode=professionnel</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/mentionlegal</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/site-plan</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/login</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/assets/cv/cv.pdf</loc>
+  <lastmod>2025-05-15T15:16:10+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://www.lucasmrtn.fr/inscription</loc>
+  <lastmod>2025-06-10T15:54:47+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>

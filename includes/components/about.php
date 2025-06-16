@@ -13,7 +13,7 @@
                 n’a cessé de croître, me poussant à approfondir mes connaissances et à me spécialiser dans la
                 <strong>création numérique</strong> et le <strong>développement web</strong>.
             </p>
-            <a href="assets/cv/cv.pdf">
+            <a href="assets/cv/cv.pdf" target="_blank">
                 Mon CV
             </a>
         </div>

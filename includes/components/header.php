@@ -22,7 +22,7 @@
             <span><?=$translations['menu']??'menu'?></span>
         </div>
         <div class="link hidden" id="menu-link">
-            <?php if (isset($_SESSION['statut']) && $_SESSION['statut'] === 'admin'): ?>
+            <?php if (isset($_SESSION['statue']) && $_SESSION['statue'] === 'admin'): ?>
             <a href="dashboard.php">Dashboard</a>
             <?php endif; ?>
             <a href="index.php"><?=$translations['home']??'accueil'?></a>

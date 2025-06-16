@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <?php
-$title = "Page d'accueil";
+$title = "Page Temporaire";
 include_once "../includes/components/head.php";
 ?>
 <style>

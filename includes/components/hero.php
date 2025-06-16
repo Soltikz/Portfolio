@@ -2,7 +2,7 @@
     <div class="content">
         <div class="text">
             <h1><?=$translations['me']??'Lucas Martin.<br>Développeur Web'?></h1>
-            <p><?=$translations['accroche']??"Développeur passionné à la recherche d'une alternance dès septembre 2024 pour apprendre, relever de nouveaux défis et participer à des projets concrets"?>
+            <p><?=$translations['accroche']??"Développeur passionné à la recherche d'une alternance dès septembre 2025 pour apprendre, relever de nouveaux défis et participer à des projets concrets"?>
             </p>
         </div>
         <a href="about.php#skills" class="content-button"><?=$translations['find out more']??'En savoir plus'?> </a>
