@@ -14,35 +14,80 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const producItems = document.querySelectorAll(".accordeons > div");
-  const previews = document.querySelectorAll(".preview-all > div");
+  const toggle = document.getElementById("mode-toggle");
+  const label = document.getElementById("mode-label");
+  const producItems = document.querySelectorAll(".produc");
+  const previews = document.querySelectorAll(".preview");
 
-  function resetAll() {
-    producItems.forEach((item) => {
-      item.classList.remove("back");
-      item.querySelector(".arrow-right").style.display = "flex";
-      item.querySelector(".arrow-up").style.display = "none";
+  function reset() {
+    producItems.forEach((el) => {
+      el.style.display = "none";
+      el.classList.remove("active");
+      el.querySelector(".arrow-up").style.display = "none";
+      el.querySelector(".arrow-right").style.display = "block";
     });
-    previews.forEach((preview) => {
-      preview.style.display = "none";
-    });
+    previews.forEach((el) => (el.style.display = "none"));
   }
 
-  producItems.forEach((item, index) => {
-    item.addEventListener("click", function () {
-      resetAll();
-
-      this.classList.add("back");
-      this.querySelector(".arrow-right").style.display = "none";
-      this.querySelector(".arrow-up").style.display = "flex";
-
-      if (previews[index]) {
-        previews[index].style.display = "flex";
+  function showFiltered(mode) {
+    reset();
+    producItems.forEach((el, i) => {
+      const type = el.dataset.type.toLowerCase().trim();
+      if (type.includes(mode)) {
+        el.style.display = "flex";
+        el.style.cursor = "pointer";
       }
+    });
+    const first = Array.from(producItems).find(
+      (el) => el.style.display === "flex"
+    );
+    if (first) {
+      const index = Array.from(producItems).indexOf(first);
+      previews[index].style.display = "flex";
+      first.classList.add("active");
+      first.querySelector(".arrow-up").style.display = "block";
+      first.querySelector(".arrow-right").style.display = "none";
+    }
+  }
+
+  producItems.forEach((el, i) => {
+    el.addEventListener("click", () => {
+      previews.forEach((p) => (p.style.display = "none"));
+      previews[i].style.display = "flex";
+
+      producItems.forEach((item) => {
+        item.classList.remove("active");
+        item.querySelector(".arrow-up").style.display = "none";
+        item.querySelector(".arrow-right").style.display = "block";
+      });
+
+      el.classList.add("active");
+      el.querySelector(".arrow-up").style.display = "block";
+      el.querySelector(".arrow-right").style.display = "none";
     });
   });
 
-  producItems[0].click();
+  // === NOUVEAU CODE POUR FORCER LE CHANGEMENT DE MODE PHP PAR L'URL ===
+  toggle.addEventListener("change", () => {
+    const mode = toggle.checked ? "academique" : "professionnel";
+    const url = new URL(window.location.href);
+    url.searchParams.set("mode", mode);
+    window.location.href = url.toString(); // Recharge avec le nouveau mode
+  });
+
+  // Cocher automatiquement le switch si "mode=academique"
+  const urlParams = new URLSearchParams(window.location.search);
+  const modeParam = urlParams.get("mode");
+  if (modeParam === "academique") {
+    toggle.checked = true;
+    label.textContent = "Académique";
+  } else {
+    toggle.checked = false;
+    label.textContent = "Professionnel";
+  }
+
+  // Affichage par défaut
+  showFiltered(modeParam === "academique" ? "academique" : "professionnel");
 });
 
 const container = document.querySelector(".image");

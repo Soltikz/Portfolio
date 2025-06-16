@@ -1,15 +1,14 @@
 <?php
 $info = $bdd->query("SELECT * FROM production");
 $productions = $info->fetchAll(PDO::FETCH_ASSOC);
-$info2 = $bdd->query("SELECT * FROM projets");
-$projets = $info2->fetchAll(PDO::FETCH_ASSOC);
+// Récupérer les dates uniques triées
+$datesQuery = $bdd->query("SELECT DISTINCT date FROM production ORDER BY date DESC");
+$dates = $datesQuery->fetchAll(PDO::FETCH_COLUMN);
 ?>
 <div class="production">
     <div class="title-prod">
         <p>01.</p>
-        <h2>
-            <?=$translations['produc'] ?? 'Productions'?>
-        </h2>
+        <h2><?= $translations['produc'] ?? 'Productions' ?></h2>
     </div>
 
     <!-- Switch pour changer de mode -->
@@ -19,59 +18,19 @@ $projets = $info2->fetchAll(PDO::FETCH_ASSOC);
                 <input type="checkbox" id="mode-toggle">
                 <span class="slider"></span>
             </label>
-            <span id="mode-label">Professionel</span>
+            <span id="mode-label">Professionnel</span>
         </div>
-
     </div>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const toggle = document.getElementById("mode-toggle");
-        const label = document.getElementById("mode-label");
 
-        toggle.addEventListener("change", function() {
-            const isChecked = toggle.checked;
-            const newMode = isChecked ? "academique" : "professionnel";
-
-            // Changer le texte du label
-            label.textContent = isChecked ? "Académique" : "Professionnel";
-
-            // Sélectionner tous les liens des aperçus
-            const links = document.querySelectorAll(".preview a");
-
-            links.forEach((link) => {
-                const currentHref = link.getAttribute("href");
-
-                // Remplacer le mode dans l'URL (s'il existe déjà)
-                if (currentHref.includes("mode=")) {
-                    const updatedHref = currentHref.replace(
-                        /mode=(professionnel|academique)/,
-                        "mode=" + newMode
-                    );
-                    link.setAttribute("href", updatedHref);
-                } else {
-                    // Si le paramètre mode n'est pas là, on l'ajoute
-                    const separator = currentHref.includes("?") ? "&" : "?";
-                    const updatedHref = currentHref + separator + "mode=" + newMode;
-                    link.setAttribute("href", updatedHref);
-                }
-            });
-        });
-    });
-    </script>
     <div class="content-produc">
         <div class="accordeons">
-            <?php
-            // Boucle pour afficher chaque production
-            foreach ($productions as $index => $production) {
-                // Assurer que l'index commence à 1 et est utilisé pour la classe de l'accordéon
-                $accordionClass = 'produc' . ($index + 1);
-            ?>
-            <div class="produc back">
+            <?php foreach ($productions as $index => $production): ?>
+            <div class="produc back" data-type="<?= strtolower(trim($production['ac_pro'])) ?>">
                 <div class="date">
-                    <p><?=$production['date']?></p>
+                    <p><?= htmlspecialchars($production['date']) ?></p>
                 </div>
                 <div class="info">
-                    <p><?=$production['name']?></p>
+                    <p><?= htmlspecialchars($production['name']) ?></p>
                 </div>
                 <div>
                     <div class="arrow-right">
@@ -90,28 +49,55 @@ $projets = $info2->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </div>
-            <?php } ?>
+            <?php endforeach; ?>
         </div>
 
         <div class="preview-all">
-            <?php
-            // Boucle pour afficher les aperçus des productions
-            foreach ($productions as $production) {
-            ?>
-            <div class="preview">
-                <img src="<?=$production['image']?>" alt="image projet">
+            <?php foreach ($productions as $production): ?>
+            <div class="preview" data-type="<?= strtolower(trim($production['ac_pro'])) ?>" style="display:none;">
+                <img src="<?= htmlspecialchars($production['image']) ?>" alt="image projet">
                 <div class="info-pre">
-                    <h3><?=$production['name']?></h3>
-                    <p><?= mb_strlen($production['description']) > 150 
-    ? mb_substr($production['description'], 0, 150) . '...'
-    : $production['description']; ?>
+                    <h3><?= htmlspecialchars($production['name']) ?></h3>
+                    <p><?= mb_strlen($production['description']) > 150
+                            ? mb_substr($production['description'], 0, 150) . '...'
+                            : htmlspecialchars($production['description']); ?>
                     </p>
-                    <a href="project.php?name=<?= urlencode($production['name']) ?>&mode=professionnel">
-                        <?=$translations['Discover the project'] ?? 'Découvrir le projet'?>
+                    <a
+                        href="project.php?name=<?= urlencode($production['name']) ?>&mode=<?= $_GET['mode'] ?? 'professionnel' ?>">
+                        <?= $translations['Discover the project'] ?? 'Découvrir le projet' ?>
                     </a>
                 </div>
             </div>
-            <?php } ?>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("mode-toggle");
+    const label = document.getElementById("mode-label");
+
+    // Lire le mode actuel dans l'URL ou défaut à "professionnel"
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentMode = urlParams.get("mode") || "professionnel";
+
+    // Appliquer l'état du switch
+    toggle.checked = currentMode === "academique";
+    label.textContent = toggle.checked ? "Académique" : "Professionnel";
+
+    // Appliquer dynamiquement le mode dans tous les liens
+    document.querySelectorAll('.preview a').forEach(link => {
+        const url = new URL(link.href);
+        url.searchParams.set('mode', currentMode);
+        link.href = url.toString();
+    });
+
+    // Gérer le changement de mode
+    toggle.addEventListener("change", () => {
+        const newMode = toggle.checked ? "academique" : "professionnel";
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set("mode", newMode);
+        window.location.href = newUrl.toString();
+    });
+});
+</script>
